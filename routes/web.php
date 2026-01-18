@@ -34,4 +34,8 @@ Route::middleware(['auth', \App\Http\Middleware\EnsureAdmin::class])->group(func
 
     Route::get('settings', [\App\Http\Controllers\SettingController::class, 'index'])->name('settings.index');
     Route::post('settings', [\App\Http\Controllers\SettingController::class, 'update'])->name('settings.update');
+
+    Route::get('backup', [\App\Http\Controllers\BackupController::class, 'index'])->name('backup.index');
+    Route::post('backup/download', [\App\Http\Controllers\BackupController::class, 'download'])->name('backup.download');
+    Route::post('backup/restore', [\App\Http\Controllers\BackupController::class, 'restore'])->name('backup.restore');
 });

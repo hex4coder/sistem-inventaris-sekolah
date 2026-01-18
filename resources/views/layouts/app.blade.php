@@ -62,6 +62,11 @@
                                 <i class="ph ph-gear" style="font-size: 1.25rem; margin-right: 0.5rem;"></i>
                                 Pengaturan
                             </a>
+                            <a href="{{ route('backup.index') }}"
+                                class="nav-link {{ request()->routeIs('backup.*') ? 'active' : '' }}">
+                                <i class="ph ph-database" style="font-size: 1.25rem; margin-right: 0.5rem;"></i>
+                                Backup & Restore
+                            </a>
                         @endif
                         <a href="{{ route('items.index') }}"
                             class="nav-link {{ request()->routeIs('items.*') ? 'active' : '' }}">
