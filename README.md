@@ -28,16 +28,35 @@
 
 ## 📸 Screenshots
 
-*(Silakan upload foto aplikasi di sini)*
+### 1. Dashboard & Analitik
+**Grafik Dashboard Admin**
+Menampilkan statistik ringkas dan grafik tren peminjaman serta statusnya.
+![Grafik Dashboard](screenshot_app/grafik%20dashboard%20admin.png)
 
-- **Dashboard Admin**
-  *(Tempatkan screenshot dashboard di sini)*
+### 2. Manajemen Barang & Peminjaman
+**Daftar Barang**
+![Daftar Barang](screenshot_app/tampilan%20daftar%20barang.png)
 
-- **Form Peminjaman**
-  *(Tempatkan screenshot form di sini)*
+**Riwayat Peminjaman**
+![Daftar Peminjaman](screenshot_app/daftar%20peminjaman.png)
 
-- **Laporan PDF**
-  *(Tempatkan screenshot laporan PDF di sini)*
+**Detail Peminjaman**
+![Detail Peminjaman](screenshot_app/detail%20peminjaman.png)
+![Detail Peminjaman 2](screenshot_app/detail%20peminjaman%202.png)
+
+### 3. Laporan Laporan PDF
+**Contoh Laporan PDF**
+![Laporan PDF](screenshot_app/contoh%20laporan%20pdf.png)
+
+**Lampiran Foto Bukti**
+![Lampiran Foto](screenshot_app/lampiran%20foto%20peminjaman%20dan%20pengembalian.png)
+
+**Lampiran Penolakan**
+![Lampiran Ditolak](screenshot_app/lampiran%20peminjaman%20ditolak.png)
+
+### 4. Utilitas Sistem
+**Backup & Restore Database**
+![Backup Restore](screenshot_app/backup%20dan%20restore.png)
 
 ---
 
