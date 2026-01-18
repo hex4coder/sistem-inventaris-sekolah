@@ -132,7 +132,8 @@ class BorrowingController extends Controller
             $borrowings = auth()->user()->borrowings()->with(['item'])->latest()->get();
         }
 
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('borrowings.pdf', compact('borrowings'));
+        $settings = \App\Models\Setting::all()->pluck('value', 'key');
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('borrowings.pdf', compact('borrowings', 'settings'));
         return $pdf->download('laporan-peminjaman.pdf');
     }
 
@@ -149,8 +150,18 @@ class BorrowingController extends Controller
             'Content-Disposition' => 'attachment; filename="laporan-peminjaman.csv"',
         ];
 
-        $callback = function () use ($borrowings) {
+        $settings = \App\Models\Setting::all()->pluck('value', 'key');
+
+        $callback = function () use ($borrowings, $settings) {
             $file = fopen('php://output', 'w');
+
+            // Header Info
+            fputcsv($file, [strtoupper($settings['school_name'] ?? 'Sistem Inventaris')]);
+            fputcsv($file, ['Laporan Peminjaman Barang']);
+            fputcsv($file, ['Tahun Ajaran: ' . ($settings['academic_year'] ?? '-') . ' - Semester: ' . ($settings['semester'] ?? '-')]);
+            fputcsv($file, ['Dicetak pada: ' . now()->format('d M Y H:i')]);
+            fputcsv($file, []); // Blank line
+
             fputcsv($file, ['No', 'Peminjam', 'Barang', 'Jumlah', 'Tgl Pinjam', 'Tgl Kembali', 'Status']);
 
             foreach ($borrowings as $index => $borrowing) {

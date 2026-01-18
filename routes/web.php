@@ -29,6 +29,9 @@ Route::middleware(['auth', \App\Http\Middleware\EnsureAdmin::class])->group(func
     Route::resource('locations', \App\Http\Controllers\LocationController::class);
     Route::get('users/template', [\App\Http\Controllers\UserController::class, 'downloadTemplate'])->name('users.template');
     Route::get('users/import', [\App\Http\Controllers\UserController::class, 'import'])->name('users.import');
-    Route::post('users/import', [\App\Http\Controllers\UserController::class, 'processImport'])->name('users.process_import');
+    Route::post('users/import', [\App\Http\Controllers\UserController::class, 'processImport'])->name('users.processImport');
     Route::resource('users', \App\Http\Controllers\UserController::class);
+
+    Route::get('settings', [\App\Http\Controllers\SettingController::class, 'index'])->name('settings.index');
+    Route::post('settings', [\App\Http\Controllers\SettingController::class, 'update'])->name('settings.update');
 });

@@ -42,8 +42,18 @@
 </head>
 
 <body>
-    <h1>Laporan Peminjaman Barang</h1>
-    <p>Dicetak pada: {{ now()->format('d M Y H:i') }}</p>
+    <div style="text-align: center; margin-bottom: 20px; border-bottom: 2px solid #333; padding-bottom: 10px;">
+        @if(isset($settings['school_logo']) && $settings['school_logo'])
+            <img src="{{ public_path('storage/' . $settings['school_logo']) }}" style="height: 60px; margin-bottom: 5px;">
+        @endif
+        <h2 style="margin: 0; text-transform: uppercase;">{{ $settings['school_name'] ?? 'Sistem Inventaris Sekolah' }}
+        </h2>
+        <p style="margin: 2px 0; font-size: 12px;">
+            Tahun Ajaran: {{ $settings['academic_year'] ?? '-' }} | Semester: {{ $settings['semester'] ?? '-' }}
+        </p>
+        <h3 style="margin: 10px 0 0 0;">Laporan Peminjaman Barang</h3>
+        <p style="margin: 2px 0; font-size: 10px;">Dicetak pada: {{ now()->format('d M Y H:i') }}</p>
+    </div>
 
     <table>
         <thead>

@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+
+use App\Models\Setting;
 use App\Models\User;
 use App\Models\Category;
 use App\Models\Location;
@@ -27,11 +29,17 @@ class DatabaseSeeder extends Seeder
 
         // Staff
         User::factory()->create([
-            'name' => 'Staff User',
-            'email' => 'staff@staff.com',
+            'name' => 'Test Staff',
+            'email' => 'staff@example.com',
             'password' => Hash::make('password'),
             'role' => 'staff',
         ]);
+
+        // Settings
+        Setting::create(['key' => 'school_name', 'value' => 'SD Negeri 1 Campalagian']);
+        Setting::create(['key' => 'school_logo', 'value' => null]);
+        Setting::create(['key' => 'academic_year', 'value' => '2023/2024']);
+        Setting::create(['key' => 'semester', 'value' => 'Ganjil']);
 
         // Category
         $category = Category::create([

@@ -41,6 +41,7 @@
                     <label for="role" class="form-label">Role Akses</label>
                     <select name="role" id="role" class="form-input" required>
                         <option value="staff" {{ old('role') == 'staff' ? 'selected' : '' }}>Staff (Peminjam)</option>
+                        <option value="guru" {{ old('role') == 'guru' ? 'selected' : '' }}>Guru (Peminjam)</option>
                         <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Administrator (Pengelola)
                         </option>
                     </select>

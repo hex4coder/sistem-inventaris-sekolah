@@ -32,7 +32,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'role' => 'required|in:admin,staff',
+            'role' => 'required|in:admin,staff,guru',
         ]);
 
         \App\Models\User::create([
@@ -61,7 +61,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'role' => 'required|in:admin,staff',
+            'role' => 'required|in:admin,staff,guru',
             'password' => 'nullable|string|min:8|confirmed',
         ]);
 
@@ -151,7 +151,7 @@ class UserController extends Controller
             }
 
             // Validate role
-            if (!in_array($role, ['admin', 'staff'])) {
+            if (!in_array($role, ['admin', 'staff', 'guru'])) {
                 $errors[] = "Baris $row: Role tidak valid ($role).";
                 continue;
             }

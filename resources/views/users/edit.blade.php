@@ -44,6 +44,8 @@
                     <select name="role" id="role" class="form-input" required>
                         <option value="staff" {{ old('role', $user->role) == 'staff' ? 'selected' : '' }}>Staff (Peminjam)
                         </option>
+                        <option value="guru" {{ old('role', $user->role) == 'guru' ? 'selected' : '' }}>Guru (Peminjam)
+                        </option>
                         <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Administrator
                             (Pengelola)</option>
                     </select>

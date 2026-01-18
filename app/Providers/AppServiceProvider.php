@@ -19,6 +19,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        if (\Illuminate\Support\Facades\Schema::hasTable('settings')) {
+            $settings = \App\Models\Setting::all()->pluck('value', 'key')->toArray();
+            \Illuminate\Support\Facades\View::share('schoolSettings', $settings);
+        }
     }
 }

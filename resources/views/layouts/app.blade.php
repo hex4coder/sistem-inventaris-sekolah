@@ -19,8 +19,19 @@
                 <aside class="sidebar">
                     <div class="sidebar-header">
                         <a href="{{ route('dashboard') }}" class="sidebar-brand">
-                            <i class="ph ph-package" style="font-size: 1.5rem;"></i>
-                            Inventaris Sekolah
+                            @if(isset($schoolSettings['school_logo']) && $schoolSettings['school_logo'])
+                                <img src="{{ asset('storage/' . $schoolSettings['school_logo']) }}" alt="Logo"
+                                    style="height: 30px; margin-right: 0.5rem;">
+                            @else
+                                <i class="ph ph-package" style="font-size: 1.5rem; margin-right: 0.5rem;"></i>
+                            @endif
+                            <div class="flex flex-col">
+                                <span
+                                    style="font-size: 1rem; line-height: 1.2;">{{ $schoolSettings['school_name'] ?? 'Inventaris Sekolah' }}</span>
+                                <span style="font-size: 0.75rem; font-weight: 400; opacity: 0.8;">
+                                    {{ $schoolSettings['semester'] ?? '' }} {{ $schoolSettings['academic_year'] ?? '' }}
+                                </span>
+                            </div>
                         </a>
                     </div>
 
@@ -45,6 +56,11 @@
                                 class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
                                 <i class="ph ph-users" style="font-size: 1.25rem; margin-right: 0.5rem;"></i>
                                 Pengguna
+                            </a>
+                            <a href="{{ route('settings.index') }}"
+                                class="nav-link {{ request()->routeIs('settings.*') ? 'active' : '' }}">
+                                <i class="ph ph-gear" style="font-size: 1.25rem; margin-right: 0.5rem;"></i>
+                                Pengaturan
                             </a>
                         @endif
                         <a href="{{ route('items.index') }}"
