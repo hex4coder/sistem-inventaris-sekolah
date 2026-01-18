@@ -25,5 +25,8 @@ Route::resource('borrowings', \App\Http\Controllers\BorrowingController::class)-
 Route::middleware(['auth', \App\Http\Middleware\EnsureAdmin::class])->group(function () {
     Route::resource('categories', \App\Http\Controllers\CategoryController::class);
     Route::resource('locations', \App\Http\Controllers\LocationController::class);
+    Route::get('users/template', [\App\Http\Controllers\UserController::class, 'downloadTemplate'])->name('users.template');
+    Route::get('users/import', [\App\Http\Controllers\UserController::class, 'import'])->name('users.import');
+    Route::post('users/import', [\App\Http\Controllers\UserController::class, 'processImport'])->name('users.process_import');
     Route::resource('users', \App\Http\Controllers\UserController::class);
 });

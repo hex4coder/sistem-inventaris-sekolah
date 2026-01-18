@@ -93,4 +93,88 @@ class UserController extends Controller
 
         return redirect()->route('users.index')->with('success', 'Pengguna berhasil dihapus.');
     }
+
+    public function import()
+    {
+        return view('users.import');
+    }
+
+    public function downloadTemplate()
+    {
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="users_template.csv"',
+        ];
+
+        $callback = function () {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, ['name', 'email', 'password', 'role']);
+            fputcsv($file, ['John Doe', 'john@example.com', 'password123', 'staff']);
+            fputcsv($file, ['Jane Admin', 'jane@example.com', 'securepass', 'admin']);
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
+    public function processImport(\Illuminate\Http\Request $request)
+    {
+        $request->validate([
+            'csv_file' => 'required|file|mimes:csv,txt|max:2048',
+        ]);
+
+        $file = $request->file('csv_file');
+        $handle = fopen($file->getPathname(), 'r');
+
+        // Skip header row
+        fgetcsv($handle);
+
+        $row = 1;
+        $successCount = 0;
+        $errors = [];
+
+        while (($data = fgetcsv($handle)) !== false) {
+            $row++;
+
+            // Basic validation for row counts
+            if (count($data) < 4) {
+                $errors[] = "Baris $row: Data tidak lengkap.";
+                continue;
+            }
+
+            [$name, $email, $password, $role] = $data;
+
+            // Validate email uniqueness
+            if (\App\Models\User::where('email', $email)->exists()) {
+                $errors[] = "Baris $row: Email $email sudah terdaftar.";
+                continue;
+            }
+
+            // Validate role
+            if (!in_array($role, ['admin', 'staff'])) {
+                $errors[] = "Baris $row: Role tidak valid ($role).";
+                continue;
+            }
+
+            try {
+                \App\Models\User::create([
+                    'name' => $name,
+                    'email' => $email,
+                    'password' => \Illuminate\Support\Facades\Hash::make($password),
+                    'role' => $role,
+                ]);
+                $successCount++;
+            } catch (\Exception $e) {
+                $errors[] = "Baris $row: Gagal menyimpan data. " . $e->getMessage();
+            }
+        }
+
+        fclose($handle);
+
+        if (count($errors) > 0) {
+            return redirect()->route('users.import')->with('error', "Import selesai dengan catatan: " . count($errors) . " error. $successCount berhasil.")->with('import_errors', $errors);
+        }
+
+        return redirect()->route('users.index')->with('success', "$successCount pengguna berhasil diimport.");
+    }
 }

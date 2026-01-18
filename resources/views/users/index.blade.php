@@ -23,10 +23,16 @@
                     <p style="color: var(--color-text-muted);">Kelola akses pengguna aplikasi</p>
                 </div>
 
-                <a href="{{ route('users.create') }}" class="btn btn-primary">
-                    <i class="ph ph-plus" style="margin-right: 0.5rem; font-size: 1.25rem;"></i>
-                    Tambah Pengguna
-                </a>
+                <div class="flex gap-2">
+                    <a href="{{ route('users.import') }}" class="btn" style="background: #f1f5f9; color: #475569;">
+                        <i class="ph ph-upload-simple" style="margin-right: 0.5rem; font-size: 1.25rem;"></i>
+                        Import
+                    </a>
+                    <a href="{{ route('users.create') }}" class="btn btn-primary">
+                        <i class="ph ph-plus" style="margin-right: 0.5rem; font-size: 1.25rem;"></i>
+                        Tambah Pengguna
+                    </a>
+                </div>
             </div>
 
             <div style="overflow-x: auto;">
