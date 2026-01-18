@@ -2,12 +2,6 @@
 
 @section('content')
     <div class="container" style="padding-top: 2rem; padding-bottom: 2rem;">
-        @if(session('success'))
-            <div
-                style="background-color: #f0fdf4; border-left: 4px solid #4ade80; color: #166534; padding: 1rem; border-radius: 0.25rem; margin-bottom: 1.5rem;">
-                {{ session('success') }}
-            </div>
-        @endif
 
         <div class="card">
             <h2 style="font-size: 1.5rem; font-weight: 700; color: var(--color-text); margin-bottom: 1.5rem;">Pengaturan
@@ -33,8 +27,21 @@
                     <select name="semester" id="semester" class="form-input" required>
                         <option value="Ganjil" {{ ($settings['semester'] ?? '') == 'Ganjil' ? 'selected' : '' }}>Ganjil
                         </option>
-                        <option value="Genap" {{ ($settings['semester'] ?? '') == 'Genap' ? 'selected' : '' }}>Genap</option>
+                        <option value="Genap" {{ ($settings['semester'] ?? '') == 'Genap' ? 'selected' : '' }}>Genap
+                        </option>
                     </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="sarpras_name" class="form-label">Nama Wakasek Sarpras</label>
+                    <input type="text" name="sarpras_name" id="sarpras_name" class="form-input"
+                        value="{{ $settings['sarpras_name'] ?? '' }}" placeholder="Nama Lengkap dengan Gelar">
+                </div>
+
+                <div class="form-group">
+                    <label for="sarpras_nip" class="form-label">NIP Wakasek Sarpras</label>
+                    <input type="text" name="sarpras_nip" id="sarpras_nip" class="form-input"
+                        value="{{ $settings['sarpras_nip'] ?? '' }}" placeholder="NIP">
                 </div>
 
                 <div class="form-group">

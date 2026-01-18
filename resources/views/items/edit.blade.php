@@ -102,9 +102,8 @@
 
                 <div class="flex justify-between items-center"
                     style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
-                    <button type="button"
-                        onclick="if(confirm('Yakin ingin menghapus item ini? Tndakan ini tidak dapat dibatalkan.')) document.getElementById('delete-form').submit();"
-                        class="btn" style="background: #fee2e2; color: #991b1b;">
+                    <button type="button" onclick="document.getElementById('delete-form').requestSubmit();" class="btn"
+                        style="background: #fee2e2; color: #991b1b;">
                         <i class="ph ph-trash" style="margin-right: 0.5rem;"></i>
                         Hapus Barang
                     </button>
@@ -122,7 +121,8 @@
                 </div>
             </form>
 
-            <form id="delete-form" action="{{ route('items.destroy', $item) }}" method="POST" style="display: none;">
+            <form id="delete-form" action="{{ route('items.destroy', $item) }}" method="POST" style="display: none;"
+                class="delete-form">
                 @csrf
                 @method('DELETE')
             </form>

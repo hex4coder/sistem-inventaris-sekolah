@@ -5,7 +5,8 @@
         <div class="card">
             <div class="mb-6 flex justify-between items-center">
                 <h1 style="font-size: 1.5rem; font-weight: 700; color: var(--color-text);">Edit Lokasi:
-                    {{ $location->name }}</h1>
+                    {{ $location->name }}
+                </h1>
                 <a href="{{ route('locations.index') }}"
                     style="color: var(--color-text-muted); text-decoration: none; display: inline-flex; align-items: center;">
                     <i class="ph ph-arrow-left" style="margin-right: 0.5rem;"></i>
@@ -41,9 +42,8 @@
 
                 <div class="flex justify-between items-center"
                     style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
-                    <button type="button"
-                        onclick="if(confirm('Yakin ingin menghapus lokasi ini?')) document.getElementById('delete-form').submit();"
-                        class="btn" style="background: #fee2e2; color: #991b1b;">
+                    <button type="button" onclick="document.getElementById('delete-form').requestSubmit();" class="btn"
+                        style="background: #fee2e2; color: #991b1b;">
                         <i class="ph ph-trash" style="margin-right: 0.5rem;"></i>
                         Hapus
                     </button>
@@ -59,8 +59,8 @@
                 </div>
             </form>
 
-            <form id="delete-form" action="{{ route('locations.destroy', $location) }}" method="POST"
-                style="display: none;">
+            <form id="delete-form" action="{{ route('locations.destroy', $location) }}" method="POST" style="display: none;"
+                class="delete-form">
                 @csrf
                 @method('DELETE')
             </form>

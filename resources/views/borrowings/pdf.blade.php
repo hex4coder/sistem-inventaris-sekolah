@@ -85,6 +85,20 @@
             @endforeach
         </tbody>
     </table>
+
+    <table style="width: 100%; margin-top: 40px; border: none;">
+        <tr>
+            <td style="border: none; width: 60%;"></td>
+            <td style="border: none; width: 40%; text-align: center;">
+                <p>Mengetahui,</p>
+                <p>Wakabid Sarana dan Prasarana</p>
+                <br><br><br>
+                <p style="font-weight: bold; text-decoration: underline;">
+                    {{ $settings['sarpras_name'] ?? '..........................' }}</p>
+                <p>NIP. {{ $settings['sarpras_nip'] ?? '..........................' }}</p>
+            </td>
+        </tr>
+    </table>
 </body>
 
 </html>

@@ -80,7 +80,8 @@
             @if(Auth::user()->isAdmin())
                 <div class="flex justify-end gap-4">
                     @if($borrowing->status === 'pending')
-                        <form action="{{ route('borrowings.update', $borrowing) }}" method="POST">
+                        <form action="{{ route('borrowings.update', $borrowing) }}" method="POST" class="confirm-form"
+                            data-confirm-message="Tolak pengajuan peminjaman ini?">
                             @csrf @method('PUT')
                             <input type="hidden" name="status" value="rejected">
                             <button type="submit" class="btn" style="background: #fee2e2; color: #991b1b;">
@@ -88,7 +89,8 @@
                             </button>
                         </form>
 
-                        <form action="{{ route('borrowings.update', $borrowing) }}" method="POST">
+                        <form action="{{ route('borrowings.update', $borrowing) }}" method="POST" class="confirm-form"
+                            data-confirm-message="Setujui peminjaman ini? Stok barang akan berkurang.">
                             @csrf @method('PUT')
                             <input type="hidden" name="status" value="approved">
                             <button type="submit" class="btn btn-primary">
@@ -98,7 +100,8 @@
                     @endif
 
                     @if($borrowing->status === 'approved')
-                        <form action="{{ route('borrowings.update', $borrowing) }}" method="POST">
+                        <form action="{{ route('borrowings.update', $borrowing) }}" method="POST" class="confirm-form"
+                            data-confirm-message="Apakah barang sudah dikembalikan dan diperiksa kondisinya?">
                             @csrf @method('PUT')
                             <input type="hidden" name="status" value="returned">
                             <button type="submit" class="btn" style="background: #dbeafe; color: #1e40af;">
@@ -110,8 +113,7 @@
             @else
                 @if($borrowing->status === 'pending')
                     <div class="flex justify-end">
-                        <form action="{{ route('borrowings.destroy', $borrowing) }}" method="POST"
-                            onsubmit="return confirm('Batalkan pengajuan ini?');">
+                        <form action="{{ route('borrowings.destroy', $borrowing) }}" method="POST" class="delete-form">
                             @csrf @method('DELETE')
                             <button type="submit" class="btn" style="background: #fee2e2; color: #991b1b;">
                                 <i class="ph ph-trash" style="margin-right: 0.5rem;"></i> Batalkan Pengajuan

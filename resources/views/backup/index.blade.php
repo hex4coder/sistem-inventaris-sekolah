@@ -2,20 +2,6 @@
 
 @section('content')
     <div class="container" style="padding-top: 2rem; padding-bottom: 2rem;">
-        @if(session('success'))
-            <div
-                style="background-color: #f0fdf4; border-left: 4px solid #4ade80; color: #166534; padding: 1rem; border-radius: 0.25rem; margin-bottom: 1.5rem;">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        @if(session('error'))
-            <div
-                style="background-color: #fef2f2; border-left: 4px solid #ef4444; color: #991b1b; padding: 1rem; border-radius: 0.25rem; margin-bottom: 1.5rem;">
-                {{ session('error') }}
-            </div>
-        @endif
-
         <div class="card" style="margin-bottom: 2rem;">
             <h2 style="font-size: 1.5rem; font-weight: 700; color: var(--color-text); margin-bottom: 1rem;">Backup & Restore
                 Database</h2>
@@ -52,7 +38,8 @@
                     </p>
 
                     <form action="{{ route('backup.restore') }}" method="POST" enctype="multipart/form-data"
-                        onsubmit="return confirm('APAKAH ANDA YAKIN? Semua data saat ini akan DITIMPA dan HILANG. Tindakan ini tidak dapat dibatalkan.');">
+                        class="confirm-form"
+                        data-confirm-message="APAKAH ANDA YAKIN? Semua data saat ini akan DITIMPA dan HILANG. Tindakan ini tidak dapat dibatalkan.">
                         @csrf
                         <div class="form-group">
                             <input type="file" name="backup_file" class="form-input" required accept=".zip"
