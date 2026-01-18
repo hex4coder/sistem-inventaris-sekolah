@@ -18,6 +18,8 @@ class Borrowing extends Model
         'return_date',
         'status',
         'notes',
+        'approval_photo_path',
+        'return_photo_path',
     ];
 
     protected $casts = [

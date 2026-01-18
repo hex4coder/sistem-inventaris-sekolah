@@ -23,14 +23,16 @@
                 </div>
 
                 <div class="flex gap-2">
-                    <a href="{{ route('borrowings.export.pdf') }}" class="btn" style="background: #fee2e2; color: #991b1b;">
-                        <i class="ph ph-file-pdf" style="margin-right: 0.5rem; font-size: 1.25rem;"></i>
-                        PDF
-                    </a>
-                    <a href="{{ route('borrowings.export.csv') }}" class="btn" style="background: #dcfce7; color: #166534;">
-                        <i class="ph ph-file-csv" style="margin-right: 0.5rem; font-size: 1.25rem;"></i>
-                        CSV
-                    </a>
+                    @if(Auth::user()->isAdmin())
+                        <a href="{{ route('borrowings.export.pdf') }}" class="btn" style="background: #fee2e2; color: #991b1b;">
+                            <i class="ph ph-file-pdf" style="margin-right: 0.5rem; font-size: 1.25rem;"></i>
+                            PDF
+                        </a>
+                        <a href="{{ route('borrowings.export.csv') }}" class="btn" style="background: #dcfce7; color: #166534;">
+                            <i class="ph ph-file-csv" style="margin-right: 0.5rem; font-size: 1.25rem;"></i>
+                            CSV
+                        </a>
+                    @endif
                     <a href="{{ route('borrowings.create') }}" class="btn btn-primary">
                         <i class="ph ph-plus-circle" style="margin-right: 0.5rem; font-size: 1.25rem;"></i>
                         Ajukan Peminjaman

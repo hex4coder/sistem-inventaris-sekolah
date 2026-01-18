@@ -98,6 +98,7 @@
                     @yield('content')
                 </main>
             </div>
+        @else
             @yield('content')
         @endauth
     </div>
@@ -169,6 +170,7 @@
             });
         });
     </script>
+    @stack('scripts')
 </body>
 
 </html>

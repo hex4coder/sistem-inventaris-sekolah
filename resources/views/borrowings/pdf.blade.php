@@ -94,11 +94,53 @@
                 <p>Wakabid Sarana dan Prasarana</p>
                 <br><br><br>
                 <p style="font-weight: bold; text-decoration: underline;">
-                    {{ $settings['sarpras_name'] ?? '..........................' }}</p>
+                    {{ $settings['sarpras_name'] ?? '..........................' }}
+                </p>
                 <p>NIP. {{ $settings['sarpras_nip'] ?? '..........................' }}</p>
             </td>
         </tr>
     </table>
+
+    <div style="page-break-before: always;">
+        <h3 style="text-align: center; text-transform: uppercase; margin-bottom: 20px;">Lampiran Foto Bukti</h3>
+
+        @foreach($borrowings as $borrowing)
+            @if($borrowing->approval_photo_path || $borrowing->return_photo_path)
+                <div style="margin-bottom: 30px; border: 1px solid #ddd; padding: 10px;">
+                    <p style="font-weight: bold; margin-bottom: 10px;">
+                        Peminjaman #{{ $borrowing->id }} - {{ $borrowing->user->name }} ({{ $borrowing->item->name }})
+                    </p>
+                    <table style="width: 100%; border: none;">
+                        <tr>
+                            @if($borrowing->approval_photo_path)
+                                <td style="width: 50%; text-align: center; vertical-align: top; border: none; padding: 5px;">
+                                    <p style="font-size: 10px; color: #000; font-weight: bold; margin-bottom: 2px;">Bukti Serah
+                                        Terima</p>
+                                    <p style="font-size: 10px; color: #666; margin-bottom: 2px;">ID: #{{ $borrowing->id }}</p>
+                                    <p style="font-size: 10px; color: #666; margin-bottom: 5px;">Tgl:
+                                        {{ $borrowing->borrow_date->format('d M Y') }}</p>
+                                    <img src="{{ public_path('storage/' . $borrowing->approval_photo_path) }}"
+                                        style="max-width: 90%; max-height: 200px; border: 1px solid #eee;">
+                                </td>
+                            @endif
+
+                            @if($borrowing->return_photo_path)
+                                <td style="width: 50%; text-align: center; vertical-align: top; border: none; padding: 5px;">
+                                    <p style="font-size: 10px; color: #000; font-weight: bold; margin-bottom: 2px;">Bukti
+                                        Pengembalian</p>
+                                    <p style="font-size: 10px; color: #666; margin-bottom: 2px;">ID: #{{ $borrowing->id }}</p>
+                                    <p style="font-size: 10px; color: #666; margin-bottom: 5px;">Tgl:
+                                        {{ $borrowing->return_date ? $borrowing->return_date->format('d M Y') : '-' }}</p>
+                                    <img src="{{ public_path('storage/' . $borrowing->return_photo_path) }}"
+                                        style="max-width: 90%; max-height: 200px; border: 1px solid #eee;">
+                                </td>
+                            @endif
+                        </tr>
+                    </table>
+                </div>
+            @endif
+        @endforeach
+    </div>
 </body>
 
 </html>

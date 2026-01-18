@@ -84,7 +84,7 @@ class BorrowingController extends Controller
         $newStatus = $validated['status'];
         $oldStatus = $borrowing->status;
 
-        DB::transaction(function () use ($borrowing, $newStatus, $oldStatus) {
+        DB::transaction(function () use ($borrowing, $newStatus, $oldStatus, $request) {
 
             // Handle Stock Logic
             if ($oldStatus === 'pending' && $newStatus === 'approved') {
@@ -93,14 +93,27 @@ class BorrowingController extends Controller
                     throw new \Exception('Stok tidak mencukupi.');
                 }
                 $item->decrement('stock', $borrowing->quantity);
+
+                if ($request->hasFile('approval_photo')) {
+                    $path = $request->file('approval_photo')->store('evidence', 'public');
+                    $borrowing->approval_photo_path = $path;
+                }
             }
 
             if ($oldStatus === 'approved' && $newStatus === 'returned') {
                 $borrowing->item->increment('stock', $borrowing->quantity);
                 $borrowing->return_date = now();
+
+                if ($request->hasFile('return_photo')) {
+                    $path = $request->file('return_photo')->store('evidence', 'public');
+                    $borrowing->return_photo_path = $path;
+                }
             }
 
-            $borrowing->update(['status' => $newStatus]);
+            $borrowing->status = $newStatus; // key change: set status on object before save if using save(), but here we use update array below or save.
+            // Actually, the original code used $borrowing->update(['status' => $newStatus]);
+            // Since we might have set photo paths on the model instance above, we should save the model instance instead of just updating the status column.
+            $borrowing->save();
         });
 
         return redirect()->route('borrowings.show', $borrowing)->with('success', 'Status peminjaman diperbarui.');
