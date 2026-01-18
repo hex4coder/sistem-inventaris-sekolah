@@ -107,8 +107,11 @@
         @foreach($borrowings as $borrowing)
             @if($borrowing->approval_photo_path || $borrowing->return_photo_path)
                 <div style="margin-bottom: 30px; border: 1px solid #ddd; padding: 10px;">
-                    <p style="font-weight: bold; margin-bottom: 10px;">
+                    <p style="font-weight: bold; margin-bottom: 5px;">
                         Peminjaman #{{ $borrowing->id }} - {{ $borrowing->user->name }} ({{ $borrowing->item->name }})
+                    </p>
+                    <p style="font-size: 11px; color: #444; margin-bottom: 10px; font-style: italic;">
+                        Catatan: {{ $borrowing->notes ?? '-' }}
                     </p>
                     <table style="width: 100%; border: none;">
                         <tr>
@@ -116,7 +119,6 @@
                                 <td style="width: 50%; text-align: center; vertical-align: top; border: none; padding: 5px;">
                                     <p style="font-size: 10px; color: #000; font-weight: bold; margin-bottom: 2px;">Bukti Serah
                                         Terima</p>
-                                    <p style="font-size: 10px; color: #666; margin-bottom: 2px;">ID: #{{ $borrowing->id }}</p>
                                     <p style="font-size: 10px; color: #666; margin-bottom: 5px;">Tgl:
                                         {{ $borrowing->borrow_date->format('d M Y') }}</p>
                                     <img src="{{ public_path('storage/' . $borrowing->approval_photo_path) }}"
@@ -128,7 +130,6 @@
                                 <td style="width: 50%; text-align: center; vertical-align: top; border: none; padding: 5px;">
                                     <p style="font-size: 10px; color: #000; font-weight: bold; margin-bottom: 2px;">Bukti
                                         Pengembalian</p>
-                                    <p style="font-size: 10px; color: #666; margin-bottom: 2px;">ID: #{{ $borrowing->id }}</p>
                                     <p style="font-size: 10px; color: #666; margin-bottom: 5px;">Tgl:
                                         {{ $borrowing->return_date ? $borrowing->return_date->format('d M Y') : '-' }}</p>
                                     <img src="{{ public_path('storage/' . $borrowing->return_photo_path) }}"
@@ -141,6 +142,41 @@
             @endif
         @endforeach
     </div>
+
+    @php
+        $rejectedBorrowings = $borrowings->where('status', 'rejected');
+    @endphp
+
+    @if($rejectedBorrowings->count() > 0)
+        <div style="page-break-before: always;">
+            <h3 style="text-align: center; text-transform: uppercase; margin-bottom: 20px;">Lampiran Peminjaman Ditolak</h3>
+
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th style="width: 5%;">No</th>
+                        <th style="width: 20%;">Peminjam</th>
+                        <th style="width: 20%;">Barang</th>
+                        <th style="width: 15%;">Tgl Pengajuan</th>
+                        <th style="width: 40%;">Alasan Penolakan (Catatan)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($rejectedBorrowings as $index => $borrowing)
+                        <tr>
+                            <td style="text-align: center;">{{ $loop->iteration }}</td>
+                            <td>{{ $borrowing->user->name }}</td>
+                            <td>{{ $borrowing->item->name }}</td>
+                            <td style="text-align: center;">{{ $borrowing->borrow_date->format('d/m/Y') }}</td>
+                            <td style="color: #c00; font-style: italic;">{{ $borrowing->notes ?? '-' }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    @endif
+
+    <!-- End of PDF Content -->
 </body>
 
 </html>
