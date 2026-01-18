@@ -30,21 +30,23 @@
                             <i class="ph ph-squares-four" style="font-size: 1.25rem; margin-right: 0.5rem;"></i>
                             Dashboard
                         </a>
-                        <a href="{{ route('categories.index') }}"
-                            class="nav-link {{ request()->routeIs('categories.*') ? 'active' : '' }}">
-                            <i class="ph ph-tag" style="font-size: 1.25rem; margin-right: 0.5rem;"></i>
-                            Kategori
-                        </a>
-                        <a href="{{ route('locations.index') }}"
-                            class="nav-link {{ request()->routeIs('locations.*') ? 'active' : '' }}">
-                            <i class="ph ph-map-pin" style="font-size: 1.25rem; margin-right: 0.5rem;"></i>
-                            Lokasi
-                        </a>
-                        <a href="{{ route('users.index') }}"
-                            class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
-                            <i class="ph ph-users" style="font-size: 1.25rem; margin-right: 0.5rem;"></i>
-                            Pengguna
-                        </a>
+                        @if(Auth::user()->isAdmin())
+                            <a href="{{ route('categories.index') }}"
+                                class="nav-link {{ request()->routeIs('categories.*') ? 'active' : '' }}">
+                                <i class="ph ph-tag" style="font-size: 1.25rem; margin-right: 0.5rem;"></i>
+                                Kategori
+                            </a>
+                            <a href="{{ route('locations.index') }}"
+                                class="nav-link {{ request()->routeIs('locations.*') ? 'active' : '' }}">
+                                <i class="ph ph-map-pin" style="font-size: 1.25rem; margin-right: 0.5rem;"></i>
+                                Lokasi
+                            </a>
+                            <a href="{{ route('users.index') }}"
+                                class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
+                                <i class="ph ph-users" style="font-size: 1.25rem; margin-right: 0.5rem;"></i>
+                                Pengguna
+                            </a>
+                        @endif
                         <a href="{{ route('items.index') }}"
                             class="nav-link {{ request()->routeIs('items.*') ? 'active' : '' }}">
                             <i class="ph ph-cube" style="font-size: 1.25rem; margin-right: 0.5rem;"></i>
