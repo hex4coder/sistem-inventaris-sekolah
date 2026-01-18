@@ -97,7 +97,7 @@ class BorrowingController extends Controller
 
             if ($oldStatus === 'approved' && $newStatus === 'returned') {
                 $borrowing->item->increment('stock', $borrowing->quantity);
-                $borrowing->return_date = now()->format('Y-m-d');
+                $borrowing->return_date = now();
             }
 
             $borrowing->update(['status' => $newStatus]);
@@ -122,5 +122,51 @@ class BorrowingController extends Controller
         $borrowing->delete();
 
         return redirect()->route('borrowings.index')->with('success', 'Data peminjaman dihapus.');
+    }
+
+    public function exportPdf()
+    {
+        if (auth()->user()->isAdmin()) {
+            $borrowings = \App\Models\Borrowing::with(['user', 'item'])->latest()->get();
+        } else {
+            $borrowings = auth()->user()->borrowings()->with(['item'])->latest()->get();
+        }
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('borrowings.pdf', compact('borrowings'));
+        return $pdf->download('laporan-peminjaman.pdf');
+    }
+
+    public function exportCsv()
+    {
+        if (auth()->user()->isAdmin()) {
+            $borrowings = \App\Models\Borrowing::with(['user', 'item'])->latest()->get();
+        } else {
+            $borrowings = auth()->user()->borrowings()->with(['item'])->latest()->get();
+        }
+
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="laporan-peminjaman.csv"',
+        ];
+
+        $callback = function () use ($borrowings) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, ['No', 'Peminjam', 'Barang', 'Jumlah', 'Tgl Pinjam', 'Tgl Kembali', 'Status']);
+
+            foreach ($borrowings as $index => $borrowing) {
+                fputcsv($file, [
+                    $index + 1,
+                    $borrowing->user->name,
+                    $borrowing->item->name,
+                    $borrowing->quantity,
+                    $borrowing->borrow_date->format('Y-m-d'),
+                    $borrowing->return_date ? $borrowing->return_date->format('Y-m-d') : '-',
+                    ucfirst($borrowing->status),
+                ]);
+            }
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 }

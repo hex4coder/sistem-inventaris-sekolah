@@ -20,6 +20,8 @@ Route::get('/dashboard', function () {
 })->middleware('auth')->name('dashboard');
 
 Route::resource('items', \App\Http\Controllers\ItemController::class)->middleware('auth');
+Route::get('borrowings/export/pdf', [\App\Http\Controllers\BorrowingController::class, 'exportPdf'])->name('borrowings.export.pdf')->middleware('auth');
+Route::get('borrowings/export/csv', [\App\Http\Controllers\BorrowingController::class, 'exportCsv'])->name('borrowings.export.csv')->middleware('auth');
 Route::resource('borrowings', \App\Http\Controllers\BorrowingController::class)->middleware('auth');
 
 Route::middleware(['auth', \App\Http\Middleware\EnsureAdmin::class])->group(function () {
