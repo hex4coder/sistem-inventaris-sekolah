@@ -15,9 +15,8 @@ Route::middleware('guest')->group(function () {
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware('auth')->name('dashboard');
+Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])
+    ->middleware('auth')->name('dashboard');
 
 Route::resource('items', \App\Http\Controllers\ItemController::class)->middleware('auth');
 Route::get('borrowings/export/pdf', [\App\Http\Controllers\BorrowingController::class, 'exportPdf'])->name('borrowings.export.pdf')->middleware('auth');
