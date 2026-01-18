@@ -1,59 +1,203 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+    <h1 align="center">Sistem Inventaris Sekolah (Sarpras)</h1>
+    <p align="center">Aplikasi Manajemen Peminjaman dan Inventaris Barang Berbasis Web (Laravel 11)</p>
 </p>
 
-## About Laravel
+## 📝 Deskripsi Aplikasi
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**Sistem Inventaris Sekolah** adalah aplikasi web yang dirancang untuk memudahkan sekolah dalam mengelola inventaris sarana dan prasarana (Sarpras). Aplikasi ini menangani pencatatan stok barang, proses peminjaman oleh siswa/guru, persetujuan admin, pengembalian, hingga pelaporan otomatis dalam format PDF.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Fitur Utama
+1.  **Manajemen Barang**: Pencatatan data barang, kategori, lokasi, kondisi (Baik, Rusak, Perbaikan), dan stok.
+2.  **Sistem Peminjaman**:
+    *   Pengajuan peminjaman oleh User (Guru/Siswa).
+    *   Persetujuan (Approval) oleh Admin.
+    *   Upload foto bukti **Serah Terima** (saat diambil) dan **Pengembalian** (saat dikembalikan).
+    *   Preview foto *fullscreen*.
+3.  **Laporan PDF Otomatis**:
+    *   Rekapitulasi peminjaman.
+    *   Tanda tangan digital (Wakabid Sarpras).
+    *   **Lampiran Foto**: Bukti fisik kondisi barang.
+    *   **Lampiran Ditolak**: Daftar pengajuan yang ditolak beserta alasannya.
+4.  **Dashboard Admin**:
+    *   Statistik ringkas (Total Barang, Peminjaman Aktif).
+    *   **Grafik Analitik**: Tren peminjaman 30 hari terakhir & Distribusi status peminjaman.
+5.  **Multi-Role**: Admin (Full Access) dan User (Peminjam).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 📸 Screenshots
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+*(Silakan upload foto aplikasi di sini)*
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Dashboard Admin**
+  *(Tempatkan screenshot dashboard di sini)*
 
-## Laravel Sponsors
+- **Form Peminjaman**
+  *(Tempatkan screenshot form di sini)*
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **Laporan PDF**
+  *(Tempatkan screenshot laporan PDF di sini)*
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## 🚀 Panduan Instalasi (Server Debian 13)
 
-## Contributing
+Berikut adalah langkah-langkah instalasi lengkap untuk deployment di server **Debian 13 (Trixie)**.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 1. Persiapan Server & Dependencies
+Update sistem dan install paket yang dibutuhkan (Web Server, PHP, Database).
 
-## Code of Conduct
+```bash
+# Update repository
+sudo apt update && sudo apt upgrade -y
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# Install Dependencies (Git, Curl, Unzip, Nginx/Apache)
+sudo apt install -y git curl unzip nginx software-properties-common
 
-## Security Vulnerabilities
+# Install PHP 8.2 (atau versi terbaru yang support Laravel 11) & Ekstensi
+sudo apt install -y php8.2 php8.2-fpm php8.2-cli php8.2-mysql php8.2-xml php8.2-mbstring php8.2-curl php8.2-zip php8.2-gd php8.2-intl php8.2-bcmath
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# Install Composer
+curl -sS https://getcomposer.org/installer | php
+sudo mv composer.phar /usr/local/bin/composer
+```
 
-## License
+### 2. Instalasi Database (MariaDB)
+```bash
+# Install MariaDB Server
+sudo apt install -y mariadb-server
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# Secure Installation (Set root password)
+sudo mysql_secure_installation
+
+# Buat Database dan User
+sudo mysql -u root -p
+```
+*Dalam prompt MySQL:*
+```sql
+CREATE DATABASE inventaris_db;
+CREATE USER 'inventaris_user'@'localhost' IDENTIFIED BY 'password_aman_anda';
+GRANT ALL PRIVILEGES ON inventaris_db.* TO 'inventaris_user'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
+```
+
+### 3. Instalasi Node.js (Untuk Build Assets)
+Laravel menggunakan Vite yang membutuhkan Node.js.
+```bash
+# Install Node.js 20 (LTS)
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install -y nodejs
+```
+
+### 4. Setup Aplikasi
+Clone repository dan konfigurasi.
+
+```bash
+# Masuk ke direktori web
+cd /var/www/html
+
+# Clone Repository (Ganti URL dengan repo Anda)
+git clone https://github.com/username/sistem-inventaris-sekolah.git
+cd sistem-inventaris-sekolah
+
+# Install PHP Dependencies
+composer install --optimize-autoloader --no-dev
+
+# Copy Environment File
+cp .env.example .env
+
+# Edit .env dan sesuaikan database
+nano .env
+```
+*Ubah konfigurasi berikut:*
+```env
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=http://domain-sekolah-anda.com
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=inventaris_db
+DB_USERNAME=inventaris_user
+DB_PASSWORD=password_aman_anda
+```
+
+### 5. Finalisasi & Build
+```bash
+# Generate Application Key
+php artisan key:generate
+
+# Migrasi Database & Seeding (Akun Admin Default)
+php artisan migrate --seed
+
+# Create Storage Link (Untuk foto bukti)
+php artisan storage:link
+
+# Install Node Modules & Build Assets (CSS/JS)
+npm install
+npm run build
+
+# Atur Permission Folder
+sudo chown -R www-data:www-data /var/www/html/sistem-inventaris-sekolah
+sudo chmod -R 775 /var/www/html/sistem-inventaris-sekolah/storage
+sudo chmod -R 775 /var/www/html/sistem-inventaris-sekolah/bootstrap/cache
+```
+
+### 6. Konfigurasi Web Server (Nginx)
+Buat file konfigurasi Nginx baru.
+
+```bash
+sudo nano /etc/nginx/sites-available/inventaris
+```
+*Isi konfigurasi:*
+```nginx
+server {
+    listen 80;
+    server_name domain-sekolah-anda.com;
+    root /var/www/html/sistem-inventaris-sekolah/public;
+
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options "nosniff";
+
+    index index.php;
+
+    charset utf-8;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
+
+    error_page 404 /index.php;
+
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
+}
+```
+
+**Aktifkan Site & Restart Nginx:**
+```bash
+sudo ln -s /etc/nginx/sites-available/inventaris /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl restart nginx
+```
+
+### Selesai! 🎉
+Akses aplikasi melalui browser di `http://domain-sekolah-anda.com`.
+- **Email Default Admin**: `admin@example.com` (jika menggunakan seeder)
+- **Password**: `password` (jika menggunakan seeder)
+
+---
+*Dibuat dengan ❤️ oleh Tim Pengembang Sekolah*
